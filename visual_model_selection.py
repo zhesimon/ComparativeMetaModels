@@ -27,7 +27,7 @@ def MC_visual_density_plot(X_DR, Y_list, export_file=True):
     
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (nsamples, 2)
+    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples that consist of model name and model predictions
     """
     matrix=X_DR.copy()
@@ -65,7 +65,7 @@ def MC_visual_confusion_matrix(X_DR, Y_list, export_file=True):
 
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (nsamples, 2)
+    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples that consist of model name and model predictions
     """
 
@@ -132,7 +132,7 @@ def MC_biplot(X_pca, pca_model, Y_list, features, export_file=True):
     
     Parameters
     ----------
-    X_pca : a PCA reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (nsamples, 2)
+    X_pca : a PCA reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     pca_model: model of pca
     Y_list : a list of tuples that consist of model name and model predictions
     ----------
@@ -235,7 +235,7 @@ def MC_cluster_analysis(X, Y_list, n_cl=10 , export_file=True):
 
     Parameters
     ----------
-    X : a data matrix represented by a pandas dataframe of shape (nsamples, nfeatures)
+    X : a data matrix represented by a pandas dataframe of shape (n samples, p features)
     Y_list : a list of tuples (first tuple as true labels, model predictions follow) that consist of model_name and model_prediction
     """
     kmeans = KMeans(n_clusters=n_cl, random_state=10).fit(X)
@@ -308,7 +308,7 @@ def MC_simple_dr_comparison(X_DR, Y_list, export_file=True):
     
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (nsamples, 2)
+    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples (first tuple as true labels, model predictions follow) that consist of model name and model predictions
     """ 
 
