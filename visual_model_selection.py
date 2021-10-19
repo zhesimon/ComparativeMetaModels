@@ -361,6 +361,8 @@ def MC_scatterplot_prediction(Y_list, label=None, colors=None, export_file=True)
     Parameters
     ----------
     Y_list : a list of tuples that consist of model_name, model_prediction, and test_accuracy
+    label: a list of labels for the models
+    colors: a list of colors for the labels
     """
     matrix=pd.DataFrame()
     col=[]
@@ -409,6 +411,8 @@ def MC_scatterplot_confusion(Y_list, label=None, colors=None, export_file=True):
     Parameters
     ----------
     Y_list : a list of tuples (first tuple as true labels, model predictions follow) that consist of model_name, model_prediction, and test_accuracy
+    label: a list of labels for the models
+    colors: a list of colors for the labels
     """
     matrix=pd.DataFrame()
     col=[]
