@@ -352,7 +352,7 @@ def MC_simple_dr_comparison(X_DR, Y_list, export_file=True):
         
 
 
-def MC_scatterplot_prediction(Y_list, label=None, colors=None, export_file=True):
+def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, export_file=True):
     """
     Figure 11 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on model predictions
     Models locate close to each other have similar predictions
@@ -361,8 +361,8 @@ def MC_scatterplot_prediction(Y_list, label=None, colors=None, export_file=True)
     Parameters
     ----------
     Y_list : a list of tuples that consist of model_name, model_prediction, and test_accuracy
-    label: a list of labels for the models
-    colors: a list of colors for the labels
+    color_indices: a list of indices for the colors
+    colors: a list of colors
     """
     matrix=pd.DataFrame()
     col=[]
@@ -381,14 +381,14 @@ def MC_scatterplot_prediction(Y_list, label=None, colors=None, export_file=True)
 
     fig = plt.figure(figsize=[10,8])
 
-    if label is None or colors is None:
+    if color_indices is None or colors is None:
         plt.scatter(x=DR['DR1'], y=DR['DR2'])
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i]-0.3, DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.3, DR['DR2'][i]), ha='left')
         plt.show()
     else:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=label, cmap=matplotlib.colors.ListedColormap(colors))
+        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors))
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i]-0.3, DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.3, DR['DR2'][i]), ha='left')
@@ -402,7 +402,7 @@ def MC_scatterplot_prediction(Y_list, label=None, colors=None, export_file=True)
 
 
 
-def MC_scatterplot_confusion(Y_list, label=None, colors=None, export_file=True):
+def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, export_file=True):
     """
     Figure 13 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on models' confusion matrices
     Models locate close to each other have similar confusion matrices
@@ -411,8 +411,8 @@ def MC_scatterplot_confusion(Y_list, label=None, colors=None, export_file=True):
     Parameters
     ----------
     Y_list : a list of tuples (first tuple as true labels, model predictions follow) that consist of model_name, model_prediction, and test_accuracy
-    label: a list of labels for the models
-    colors: a list of colors for the labels
+    color_indices: a list of indices for the colors
+    colors: a list of colors
     """
     matrix=pd.DataFrame()
     col=[]
@@ -446,7 +446,7 @@ def MC_scatterplot_confusion(Y_list, label=None, colors=None, export_file=True):
     
     fig = plt.figure(figsize=[10,8])
         
-    if label is None or colors is None:
+    if color_indices is None or colors is None:
         plt.scatter(x=DR['DR1'], y=DR['DR2'])
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i], DR['DR2'][i]), ha='right')
@@ -454,7 +454,7 @@ def MC_scatterplot_confusion(Y_list, label=None, colors=None, export_file=True):
             fig.tight_layout(h_pad=2, w_pad=1)
         plt.show()
     else:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=label, cmap=matplotlib.colors.ListedColormap(colors))
+        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors))
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i], DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.1, DR['DR2'][i]), ha='left')
