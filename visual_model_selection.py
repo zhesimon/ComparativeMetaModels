@@ -19,9 +19,13 @@ from bioinfokit.visuz import cluster
 from scipy.cluster.hierarchy import dendrogram
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import KMeans
+import warnings
+warnings.filterwarnings("ignore")
 
 
-def MC_visual_density_plot(X_DR, Y_list, export_file=True):
+
+
+def MC_visual_density_plot(X_DR, Y_list, figsize=(12,10), export_file=False, filename=None, alpha=0.6, dpi=300):
     """
     Figure 5 in the paper performing pairwise comparison from a list of classifiers via density plot.
     
@@ -47,19 +51,24 @@ def MC_visual_density_plot(X_DR, Y_list, export_file=True):
 
             df2 = matrix[model1_name].astype(str) + matrix[model2_name].astype(str)
 
-            fig = plt.figure(figsize=[10,8])
-            sns.kdeplot(data=matrix, x=matrix.DR1, y=matrix.DR2, hue=df2, fill=True, alpha=.6)
-            plt.title(f'MC visual density plot {model1_name} vs. {model2_name}')
+            fig = plt.figure(figsize=figsize)
+            sns.kdeplot(data=matrix, x=matrix.DR1, y=matrix.DR2, hue=df2, fill=True, alpha=alpha)
+            #plt.title(title)
             
             if export_file is False:
                 pass
             else:
-                plt.savefig(f'MC_visual_density_plot_{model1_name}_{model2_name}.png', dpi=300)
+                if filename is None:
+                    print('Please input filename for export.')
+                    pass
+                else:
+                    plt.savefig(filename, dpi=dpi)
 
 
-                
 
-def MC_visual_confusion_matrix(X_DR, Y_list, export_file=True):
+
+def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10), 
+                               export_file=False, filename1=None, filename2=None, alpha=0.3, dpi=300):
     """
     Figure 6 in the paper performing pairwise comparison from a list of classifiers via visual confusion matrix.
 
@@ -85,7 +94,7 @@ def MC_visual_confusion_matrix(X_DR, Y_list, export_file=True):
             classes2 = np.unique(Y_list[i2][1])
 
             #figure4a
-            fig, axs = plt.subplots(len(classes1),len(classes2), figsize = (10,8),sharex=True, sharey=True)
+            fig, axs = plt.subplots(len(classes1),len(classes2), figsize = figsize1,sharex=True, sharey=True)
             color=['b','r','goldenrod','g']
 
             c=-1
@@ -93,7 +102,7 @@ def MC_visual_confusion_matrix(X_DR, Y_list, export_file=True):
                 for j in range(len(classes2)):
                     c+=1
                     relevant_observations = (matrix[model1_name]==classes1[i]) & (matrix[model2_name]==classes2[j])
-                    axs[i,j].plot(X_DR.iloc[:,0][relevant_observations], X_DR.iloc[:,1][relevant_observations], marker='o', linestyle='', color =color[c], alpha=0.3)    
+                    axs[i,j].plot(X_DR.iloc[:,0][relevant_observations], X_DR.iloc[:,1][relevant_observations], marker='o', linestyle='', color =color[c], alpha=alpha)  
 
                     axs[0,0].set_title('0')
                     axs[0,1].set_title('1')
@@ -103,29 +112,40 @@ def MC_visual_confusion_matrix(X_DR, Y_list, export_file=True):
 
             fig.text(0.5,0.95, model2_name, ha="center", va="center")
             fig.text(0.05,0.5, model1_name , ha="center", va="center", rotation=90)
-            plt.savefig(f'MC_visual_confusion_matrix_split_{model1_name}_{model2_name}.png', dpi=300)
+            if export_file is False:
+                pass
+            else:
+                if filename1 is None:
+                    print('Please input filename1 for export.')
+                    pass
+                else:
+                    plt.savefig(filename1, dpi=dpi)
+                    
 
             #figure4b
-            fig = plt.figure(figsize=[8,6]) 
+            fig = plt.figure(figsize=figsize2) 
             c=0
             for i in range(len(classes1)):
                 for j in range(len(classes2)):
                     if classes1[i]!=classes2[j]:
                         c+=1
                         relevant_observations = (matrix[model1_name]==classes1[i]) & (matrix[model2_name]==classes2[j])
-                        plt.plot(X_DR.iloc[:,0][relevant_observations], X_DR.iloc[:,1][relevant_observations], marker='o', linestyle='', color =color[c], label=[(model1_name, classes1[i]),(model2_name, classes2[j])], alpha=0.3)
+                        plt.plot(X_DR.iloc[:,0][relevant_observations], X_DR.iloc[:,1][relevant_observations], marker='o', linestyle='', color =color[c], label=[(model1_name, classes1[i]),(model2_name, classes2[j])], alpha=alpha)
                         plt.legend()
+
             if export_file is False:
                 pass
             else:
-                plt.savefig(f'MC_visual_confusion_matrix_combined_{model1_name}_{model2_name}.png', dpi=300)
+                if filename2 is None:
+                    print('Please input filename2 for export.')
+                    pass
+                else:
+                    plt.savefig(filename2, dpi=dpi)
 
 
 
 
-
-
-def MC_biplot(X_pca, pca_model, Y_list, features, export_file=True):
+def MC_biplot(X_pca, pca_model, Y_list, features, export_file=False, alpha=0.3, dpi=300):
 
     """
     Figure 7 in the paper performing pairwise comparison from a list of classifiers via Biplot.
@@ -169,28 +189,28 @@ def MC_biplot(X_pca, pca_model, Y_list, features, export_file=True):
                 cluster.biplot(cscore=pca_scores, loadings=loadings, labels=features,
                                var1=round(pca_model.explained_variance_ratio_[0]*100, 2),
                                var2=round(pca_model.explained_variance_ratio_[1]*100, 2), colorlist=target,
-                               show=True, dim=(10,8), valphadot=0.3, dotsize=15, arrowlinewidth=1.5,
-                               arrowcolor='orange', axlabelfontsize=15, figtype='png',
+                               show=True, dim=(10,8), valphadot=alpha, dotsize=15, arrowlinewidth=1.5,
+                               arrowcolor='orange', axlabelfontsize=15, figtype='png', r=dpi,
                                colordot=['#e6b619', '#d65418']) #'#42b86d', '#1884d6'
             else:
                 cluster.biplot(cscore=pca_scores, loadings=loadings, labels=features,
                                var1=round(pca_model.explained_variance_ratio_[0]*100, 2),
                                var2=round(pca_model.explained_variance_ratio_[1]*100, 2), colorlist=target,
-                               show=True, dim=(10,8), valphadot=0.3, dotsize=15, arrowlinewidth=1.5,
-                               arrowcolor='orange', axlabelfontsize=15, figtype='png',
+                               show=True, dim=(10,8), valphadot=alpha, dotsize=15, arrowlinewidth=1.5,
+                               arrowcolor='orange', axlabelfontsize=15, figtype='png', r=dpi,
                                colordot=['#e6b619', '#d65418']) #'#42b86d', '#1884d6'
             
                 cluster.biplot(cscore=pca_scores, loadings=loadings, labels=features,
                                var1=round(pca_model.explained_variance_ratio_[0]*100, 2),
                                var2=round(pca_model.explained_variance_ratio_[1]*100, 2), colorlist=target,
-                               show=False, dim=(10,8), valphadot=0.3, dotsize=15, arrowlinewidth=1.5,
-                               arrowcolor='orange', axlabelfontsize=15, figtype='png',
+                               show=False, dim=(10,8), valphadot=alpha, dotsize=15, arrowlinewidth=1.5,
+                               arrowcolor='orange', axlabelfontsize=15, figtype='png', r=dpi,
                                colordot=['#e6b619', '#d65418']) #'#42b86d', '#1884d6'
-                
 
 
 
-def MC_heatmap_of_prediction(Y_list, export_file=True):
+
+def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=False, filename=None, dpi=300):
     """
     Figure 3 in the paper performing pairwise comparison from a heatmap of model prediction agreement level.
     
@@ -216,20 +236,24 @@ def MC_heatmap_of_prediction(Y_list, export_file=True):
             res[i1,i2]=acc
 
     res = pd.DataFrame(data=res, columns=matrix.columns.values, index=matrix.columns.values)
-    res=res.round(2)
+    res=res.round(decimal)
 
-    fig = plt.figure(figsize=[12,10])
+    fig = plt.figure(figsize=figsize)
     ax = sns.heatmap(res, annot=True)
     
     if export_file is False:
         pass
     else:
-        plt.savefig(f'MC_heatmap_of_prediction.png', dpi=300)
-        
+        if filename is None:
+            print('Please input filename for export.')
+            pass
+        else:
+            plt.savefig(filename, dpi=dpi)
 
 
 
-def MC_cluster_analysis(X, Y_list, n_cl=10 , export_file=True):
+
+def MC_cluster_analysis(X, Y_list, n_cl=10, decimal=2, figsize=(12,10), export_file=False, dpi=300):
     """
     Figure 9 VCX in the paper for cluster analysis
 
@@ -283,23 +307,24 @@ def MC_cluster_analysis(X, Y_list, n_cl=10 , export_file=True):
 
         model.columns=col
         model=model.set_index('Model')
-        model=model.round(2)
+        model=model.round(decimal)
 
-        fig = plt.figure(figsize=[12,10])
+        fig = plt.figure(figsize=figsize)
         ax = sns.heatmap(model, annot=True)
 
         ax.set_title(metric, fontsize=10, fontweight="bold") 
         ax.xaxis.tick_top()
+
+            
         if export_file is False:
             pass
         else:
-            plt.savefig(f'VCX_cluster_analysis_{metric}.png', dpi=300)
+            plt.savefig(f'VCX_cluster_analysis_{metric}.png', dpi=dpi)
 
 
 
 
-def MC_simple_dr_comparison(X_DR, Y_list, export_file=True):
-    
+def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
     """
     Figure 10 in the paper performing pairwise comparison from a list of classifiers by ploting models next to each other.
     The first subfigure shows the true y labels and serves as the baseline.
@@ -325,7 +350,7 @@ def MC_simple_dr_comparison(X_DR, Y_list, export_file=True):
 
     matrix.columns=col
 
-    fig = plt.figure(figsize=[12,12])
+    fig = plt.figure(figsize=figsize)
     for j2 in range(2,matrix.shape[1]):
         model=matrix.columns[j2]
         cl=classifications[j2-2]
@@ -338,21 +363,24 @@ def MC_simple_dr_comparison(X_DR, Y_list, export_file=True):
         lw = 2
 
         for color, i, target_name in zip(colors, cl, target_names):
-            ax.scatter(X_DR.iloc[:,0][y == i], X_DR.iloc[:,1][y == i], color=color, alpha=.3, lw=lw,label=target_name)
+            ax.scatter(X_DR.iloc[:,0][y == i], X_DR.iloc[:,1][y == i], color=color, alpha=alpha, lw=lw,label=target_name)
             ax.legend()
         fig.tight_layout(h_pad=2, w_pad=1)
-    plt.show()
 
     if export_file is False:
         pass
     else:
-        plt.savefig(f'MC_simple_dr_comparison.png', dpi=300)
+        if filename is None:
+            print('Please input filename for export.')
+            pass
+        else:
+            plt.savefig(filename, dpi=dpi)
 
 
-        
 
 
-def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, export_file=True):
+def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None,
+                              figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
     """
     Figure 11 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on model predictions
     Models locate close to each other have similar predictions
@@ -379,30 +407,34 @@ def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, export_fi
     DR = pca.fit_transform(X)
     DR = pd.DataFrame(DR,columns=['DR1','DR2'], index=indexnames)
 
-    fig = plt.figure(figsize=[10,8])
+    fig = plt.figure(figsize=figsize)
 
     if color_indices is None or colors is None:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'])
+        plt.scatter(x=DR['DR1'], y=DR['DR2'],alpha=alpha)
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i]-0.3, DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.3, DR['DR2'][i]), ha='left')
-        plt.show()
+
     else:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors))
+        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors), alpha=alpha)
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i]-0.3, DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.3, DR['DR2'][i]), ha='left')
-        plt.show()
     
     if export_file is False:
         pass
     else:
-        plt.savefig(f'MC_scatterplot_prediction.png', dpi=300)
+        if filename is None:
+            print('Please input filename for export.')
+            pass
+        else:
+            plt.savefig(filename, dpi=dpi)
 
 
 
 
-def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, export_file=True):
+def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None,
+                            figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
     """
     Figure 13 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on models' confusion matrices
     Models locate close to each other have similar confusion matrices
@@ -444,27 +476,30 @@ def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, export_fil
     DR = pca.transform(X)
     DR = pd.DataFrame(DR,columns=['DR1','DR2'], index=indexnames)
     
-    fig = plt.figure(figsize=[10,8])
+    fig = plt.figure(figsize=figsize)
         
     if color_indices is None or colors is None:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'])
+        plt.scatter(x=DR['DR1'], y=DR['DR2'],alpha=alpha)
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i], DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.1, DR['DR2'][i]), ha='left')            
             fig.tight_layout(h_pad=2, w_pad=1)
-        plt.show()
+        
     else:
-        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors))
+        plt.scatter(x=DR['DR1'], y=DR['DR2'], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors),alpha=alpha)
         for i, txt in enumerate(DR.index):
             plt.annotate(txt, (DR['DR1'][i], DR['DR2'][i]), ha='right')
             plt.annotate(Y_list[i][2], (DR['DR1'][i]+0.1, DR['DR2'][i]), ha='left')
             fig.tight_layout(h_pad=2, w_pad=1)
-        plt.show()
     
     if export_file is False:
         pass
     else:
-        plt.savefig(f'MC_scatterplot_confusion.png', dpi=300)
+        if filename is None:
+            print('Please input filename for export.')
+            pass
+        else:
+            plt.savefig(filename, dpi=dpi)
 
 
 
@@ -486,7 +521,9 @@ def plot_dendrogram(model, **kwargs):
     dendrogram(linkage_matrix, **kwargs)
 
 
-def MC_hierarchical_tree(Y_list, export_file=True):
+
+
+def MC_hierarchical_tree(Y_list, figsize=(12,5), export_file=False, filename=None, dpi=300):
     """
     Figure 14 in the paper performing model comparison via hierarchical clustering by prediction.
     Models in the same cluster have similar predictions
@@ -508,12 +545,16 @@ def MC_hierarchical_tree(Y_list, export_file=True):
 
     clf = AgglomerativeClustering(distance_threshold=0, n_clusters=None)
     clf = clf.fit(matrix.T)
-    fig = plt.figure(figsize=[12,5])
+    fig = plt.figure(figsize=figsize)
     # plot the top three levels of the dendrogram
     plot_dendrogram(clf, truncate_mode=None, labels=matrix.columns)
-    plt.show()
-    
+        
     if export_file is False:
         pass
     else:
-        plt.savefig(f'MC_hierarchical_tree.png', dpi=300)
+        if filename is None:
+            print('Please input filename for export.')
+            pass
+        else:
+            plt.savefig(filename, dpi=dpi)
+
