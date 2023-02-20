@@ -12,7 +12,7 @@ from sklearn.cluster import KMeans
 import warnings
 warnings.filterwarnings("ignore")
 
-sns.set(font_scale=0.7)
+base_font=0.7
 
 def MC_heatmap_of_prediction(Y_list, decimal=2, font_scale=None, figsize=(12,10), export_file=False, filename=None, dpi=300):
     """
@@ -64,7 +64,7 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, font_scale=None, figsize=(12,10)
             pass
         else:
             plt.savefig(filename, dpi=dpi)
-    sns.set(font_scale=0.7)
+    sns.set(font_scale=base_font)
 
 
 
@@ -303,7 +303,7 @@ def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, font_scale=None, 
             pass
         else:
             plt.savefig(f'VCX_cluster_analysis_{metric}.png', dpi=dpi)
-    sns.set(font_scale=0.7)
+    sns.set(font_scale=base_font)
 
 
 def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
