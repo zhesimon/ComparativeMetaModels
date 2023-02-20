@@ -12,9 +12,9 @@ from sklearn.cluster import KMeans
 import warnings
 warnings.filterwarnings("ignore")
 
+sns.set(font_scale=0.7)
 
-
-def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=False, filename=None, dpi=300):
+def MC_heatmap_of_prediction(Y_list, decimal=2, font_scale=None, figsize=(12,10), export_file=False, filename=None, dpi=300):
     """
     Figure 3 in the paper performing pairwise comparison from a heatmap of model prediction agreement level.
     
@@ -22,6 +22,8 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=Fal
     ----------
     Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     decimal: decimal of numbers shown in the heatmap
+    font_scale: scaling factor for font size
+    figsize: figure size
     export_file: option to save the current figure
     filename: file name to be specified to save the current figure
     """ 
@@ -46,6 +48,12 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=Fal
     res=res.round(decimal)
 
     plt.figure(figsize=figsize)
+    
+    if font_scale is None:
+        pass
+    else:
+        sns.set(font_scale=font_scale)
+        
     sns.heatmap(res, annot=True)
     
     if export_file is False:
@@ -56,6 +64,7 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=Fal
             pass
         else:
             plt.savefig(filename, dpi=dpi)
+    sns.set(font_scale=0.7)
 
 
 
@@ -216,7 +225,7 @@ def MC_visual_density_plot(X_DR, Y_list, figsize=(12,10), export_file=False, fil
 
 
 
-def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, figsize=(12,10), export_file=False, filename=None, dpi=300):
+def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, font_scale=None, figsize=(12,10), export_file=False, filename=None, dpi=300):
     """
     Figure 12 VCX in the paper for cluster analysis
 
@@ -227,6 +236,8 @@ def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, figsize=(12,10), 
     models: a list that consists of model names in Y_list
     n_cl: number of clusters (default is 10)
     decimal: decimal of numbers shown in the heatmap
+    font_scale: scaling factor for font size
+    figsize: figure size
     export_file: option to save the current figure
     filename: file name to be specified to save the current figure
     """
@@ -278,18 +289,21 @@ def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, figsize=(12,10), 
         model=model.round(decimal)
 
         plt.figure(figsize=figsize)
+        
+        if font_scale is None:
+            pass
+        else:
+            sns.set(font_scale=font_scale)
+            
         ax = sns.heatmap(model, annot=True)
-
         ax.set_title(metric, fontsize=10, fontweight="bold") 
         ax.xaxis.tick_top()
-
             
         if export_file is False:
             pass
         else:
             plt.savefig(f'VCX_cluster_analysis_{metric}.png', dpi=dpi)
-
-
+    sns.set(font_scale=0.7)
 
 
 def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
