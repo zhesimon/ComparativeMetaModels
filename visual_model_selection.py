@@ -60,9 +60,7 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, figsize=(12,10), export_file=Fal
 
 
 
-
-def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None,
-                              figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
+def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
     """
     Figure 9 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on model predictions
     Models locate close to each other have similar predictions
@@ -113,7 +111,6 @@ def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None,
             pass
         else:
             plt.savefig(filename, dpi=dpi)
-
 
 
 
@@ -173,7 +170,6 @@ def MC_hierarchical_tree(Y_list, figsize=(12,5), export_file=False, filename=Non
             pass
         else:
             plt.savefig(filename, dpi=dpi)
-
 
 
 
@@ -352,8 +348,7 @@ def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, fi
 
 
 
-def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None,
-                            figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
+def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, figsize=(12,10), export_file=False, filename=None, alpha=0.3, dpi=300):
     """
     Figure 30 in the paper performing pairwise comparison via plotting PCA dimensionality reduction on models' confusion matrices
     Models locate close to each other have similar confusion matrices
@@ -425,9 +420,7 @@ def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None,
 
 
 
-
-def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10), 
-                               export_file=False, filename1=None, filename2=None, alpha=0.3, dpi=300):
+def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10), export_file=False, filename1=None, filename2=None, alpha=0.3, dpi=300):
     """
     Figure 31 in the paper performing pairwise comparison from a list of classifiers via visual confusion matrix.
 
@@ -502,6 +495,7 @@ def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10),
                     pass
                 else:
                     plt.savefig(filename2, dpi=dpi)
+
 
 
 
