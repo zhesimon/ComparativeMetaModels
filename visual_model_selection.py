@@ -24,8 +24,8 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, font_scale=None, figsize=(12,10)
     decimal: decimal of numbers shown in the heatmap
     font_scale: scaling factor for font size
     figsize: figure size
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """ 
     
     matrix=pd.DataFrame()
@@ -80,8 +80,8 @@ def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, figsize=(
     Y_list : a list of tuples that consists of model names, model predictions, and test accuracies
     color_indices: a list of indices for the colors
     colors: a list of colors
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """
     matrix=pd.DataFrame()
     col=[]
@@ -151,8 +151,8 @@ def MC_hierarchical_tree(Y_list, figsize=(12,5), export_file=False, filename=Non
     Parameters
     ----------
     Y_list : a list of tuples that consists of model names and model predictions
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     ----------
     plot_dendrogram is from the following website: https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html
     """ 
@@ -189,10 +189,10 @@ def MC_visual_density_plot(X_DR, Y_list, figsize=(12,10), export_file=False, fil
     
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples that consists of model names and model predictions
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """
     matrix=X_DR.copy()
     col=matrix.columns.tolist()
@@ -231,15 +231,15 @@ def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, font_scale=None, 
 
     Parameters
     ----------
-    X : a data matrix represented by a pandas dataframe of shape (n samples, p features)
+    X: a data matrix represented by a pandas dataframe of shape (n samples, p features)
     Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     models: a list that consists of model names in Y_list
     n_cl: number of clusters (default is 10)
     decimal: decimal of numbers shown in the heatmap
     font_scale: scaling factor for font size
     figsize: figure size
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """
     kmeans = KMeans(n_clusters=n_cl, random_state=10).fit(X)
 
@@ -315,10 +315,10 @@ def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, fi
     
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """ 
 
     matrix=X_DR.copy()
@@ -373,8 +373,8 @@ def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, figsize=(1
     Y_list : a list of tuples that consists of model names, model predictions, and test accuracies. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     color_indices: a list of indices for the colors
     colors: a list of colors
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """
     matrix=pd.DataFrame()
     col=[]
@@ -440,10 +440,10 @@ def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10),
 
     Parameters
     ----------
-    X_DR : a reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     Y_list : a list of tuples that consists of model names and model predictions
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     """
 
     matrix=X_DR.copy()
@@ -520,12 +520,12 @@ def MC_biplot(X_pca, pca_model, Y_list, features, figsize=(12,10), export_file=F
     
     Parameters
     ----------
-    X_pca : a PCA-reduced dimensionality data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    X_pca : a PCA dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     pca_model: model of PCA
     Y_list : a list of tuples that consists of model names and model predictions
     features: features of the data matrix X
-    export_file: option to save the current figure
-    filename: file name to be specified to save the current figure
+    export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
+    filename: output file name
     ----------
     """ 
 
