@@ -20,7 +20,7 @@ def MC_heatmap_of_prediction(Y_list, decimal=2, font_scale=None, figsize=(12,10)
     
     Parameters
     ----------
-    Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
+    Y_list: a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     decimal: decimal of numbers shown in the heatmap
     font_scale: scaling factor for font size
     figsize: figure size
@@ -77,7 +77,7 @@ def MC_scatterplot_prediction(Y_list, color_indices=None, colors=None, figsize=(
     
     Parameters
     ----------
-    Y_list : a list of tuples that consists of model names, model predictions, and test accuracies
+    Y_list: a list of tuples that consists of model names, model predictions, and test accuracies
     color_indices: a list of indices for the colors
     colors: a list of colors
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
@@ -150,7 +150,7 @@ def MC_hierarchical_tree(Y_list, figsize=(12,5), export_file=False, filename=Non
     
     Parameters
     ----------
-    Y_list : a list of tuples that consists of model names and model predictions
+    Y_list: a list of tuples that consists of model names and model predictions
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
     filename: output file name
     ----------
@@ -189,8 +189,8 @@ def MC_visual_density_plot(X_DR, Y_list, figsize=(12,10), export_file=False, fil
     
     Parameters
     ----------
-    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
-    Y_list : a list of tuples that consists of model names and model predictions
+    X_DR: a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    Y_list: a list of tuples that consists of model names and model predictions
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
     filename: output file name
     """
@@ -232,7 +232,7 @@ def MC_cluster_analysis(X, Y_list, models, n_cl=10, decimal=2, font_scale=None, 
     Parameters
     ----------
     X: a data matrix represented by a pandas dataframe of shape (n samples, p features)
-    Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
+    Y_list: a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     models: a list that consists of model names in Y_list
     n_cl: number of clusters (default is 10)
     decimal: decimal of numbers shown in the heatmap
@@ -315,8 +315,8 @@ def MC_simple_dr_comparison(X_DR, Y_list, figsize=(12,10), export_file=False, fi
     
     Parameters
     ----------
-    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
-    Y_list : a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
+    X_DR: a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    Y_list: a list of tuples that consists of model names and model predictions. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
     filename: output file name
     """ 
@@ -370,7 +370,7 @@ def MC_scatterplot_confusion(Y_list, color_indices=None, colors=None, figsize=(1
     
     Parameters
     ----------
-    Y_list : a list of tuples that consists of model names, model predictions, and test accuracies. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
+    Y_list: a list of tuples that consists of model names, model predictions, and test accuracies. The first tuple contains the true labels, while the subsequent tuples contain model predictions.
     color_indices: a list of indices for the colors
     colors: a list of colors
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
@@ -440,8 +440,8 @@ def MC_visual_confusion_matrix(X_DR, Y_list, figsize1=(12,10), figsize2=(12,10),
 
     Parameters
     ----------
-    X_DR : a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
-    Y_list : a list of tuples that consists of model names and model predictions
+    X_DR: a dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    Y_list: a list of tuples that consists of model names and model predictions
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
     filename: output file name
     """
@@ -520,9 +520,9 @@ def MC_biplot(X_pca, pca_model, Y_list, features, figsize=(12,10), export_file=F
     
     Parameters
     ----------
-    X_pca : a PCA dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
+    X_pca: a PCA dimensionality reduction transformation of data matrix X in 2D represented by a pandas dataframe of shape (n samples, 2)
     pca_model: model of PCA
-    Y_list : a list of tuples that consists of model names and model predictions
+    Y_list: a list of tuples that consists of model names and model predictions
     features: features of the data matrix X
     export_file: a Boolean parameter indicating whether to export the figure to a file or simply display to screen
     filename: output file name
